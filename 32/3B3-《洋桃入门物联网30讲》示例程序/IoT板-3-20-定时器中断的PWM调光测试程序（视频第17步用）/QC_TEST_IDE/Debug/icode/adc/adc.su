@@ -1,0 +1,2 @@
+../icode/adc/adc.c:10:10:ADC_IN_1	8	static
+../icode/adc/adc.c:21:10:ADC_IN_2	8	static

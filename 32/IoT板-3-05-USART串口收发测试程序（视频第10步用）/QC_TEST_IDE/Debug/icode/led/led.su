@@ -1,0 +1,5 @@
+led.c:10:6:LED_1	16	static
+led.c:15:6:LED_2	16	static
+led.c:20:6:LED_ALL	16	static
+led.c:27:6:LED_1_Contrary	8	static
+led.c:30:6:LED_2_Contrary	8	static

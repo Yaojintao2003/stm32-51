@@ -1,0 +1,17 @@
+../icode/w25q128/w25qxx.c:17:9:SPI2_ReadWriteByte	32	static
+../icode/w25q128/w25qxx.c:23:6:W25QXX_CS	16	static
+../icode/w25q128/w25qxx.c:29:9:W25QXX_Init	16	static
+../icode/w25q128/w25qxx.c:65:9:W25QXX_ReadSR	24	static
+../icode/w25q128/w25qxx.c:90:6:W25QXX_Write_SR	24	static
+../icode/w25q128/w25qxx.c:115:6:W25QXX_Write_Enable	8	static
+../icode/w25q128/w25qxx.c:123:6:W25QXX_Write_Disable	8	static
+../icode/w25q128/w25qxx.c:138:10:W25QXX_ReadID	16	static
+../icode/w25q128/w25qxx.c:156:6:W25QXX_Read	40	static
+../icode/w25q128/w25qxx.c:179:6:W25QXX_Write_Page	32	static
+../icode/w25q128/w25qxx.c:204:6:W25QXX_Write_NoCheck	32	static
+../icode/w25q128/w25qxx.c:230:6:W25QXX_Write	40	static
+../icode/w25q128/w25qxx.c:274:6:W25QXX_Erase_Chip	8	static
+../icode/w25q128/w25qxx.c:286:6:W25QXX_Erase_Sector	16	static
+../icode/w25q128/w25qxx.c:304:6:W25QXX_Wait_Busy	8	static
+../icode/w25q128/w25qxx.c:309:6:W25QXX_PowerDown	8	static
+../icode/w25q128/w25qxx.c:317:6:W25QXX_WAKEUP	8	static

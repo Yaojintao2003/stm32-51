@@ -1,0 +1,15 @@
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/timers.c
+oled(hal)\timers.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+oled(hal)\timers.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+oled(hal)\timers.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+oled(hal)\timers.o: ../Core/Inc/FreeRTOSConfig.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+oled(hal)\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h

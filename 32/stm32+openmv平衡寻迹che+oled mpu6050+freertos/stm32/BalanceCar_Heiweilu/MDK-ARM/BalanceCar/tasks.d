@@ -1,0 +1,16 @@
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+balancecar\tasks.o: E:\MDK\ARM\ARMCC\Bin\..\include\stdlib.h
+balancecar\tasks.o: E:\MDK\ARM\ARMCC\Bin\..\include\string.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+balancecar\tasks.o: E:\MDK\ARM\ARMCC\Bin\..\include\stddef.h
+balancecar\tasks.o: E:\MDK\ARM\ARMCC\Bin\..\include\stdint.h
+balancecar\tasks.o: ../Core/Inc/FreeRTOSConfig.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/portmacro.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+balancecar\tasks.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/stack_macros.h

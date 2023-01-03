@@ -1,0 +1,5 @@
+../icode/rtc/rtc.c:14:6:RTC_Init	16	static
+../icode/rtc/rtc.c:35:9:Is_Leap_Year	16	static
+../icode/rtc/rtc.c:53:9:RTC_Set	32	static
+../icode/rtc/rtc.c:83:9:RTC_Get	24	static
+../icode/rtc/rtc.c:130:9:RTC_Get_Week	24	static

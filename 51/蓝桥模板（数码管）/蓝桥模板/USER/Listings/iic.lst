@@ -1,0 +1,135 @@
+C51 COMPILER V9.54   IIC                                                                   12/02/2021 23:30:46 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN .\Objects\iic.obj
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE ..\SYS\iic.c OPTIMIZE(8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJECT
+                    -EXTEND PRINT(.\Listings\iic.lst) TABS(2) OBJECT(.\Objects\iic.obj)
+
+line level    source
+
+   1          #include "iic.h"
+*** WARNING C318 IN LINE 9 OF num.h: can't open file 'STC15F2K60S2.h'
+*** ERROR C202 IN LINE 11 OF ..\SYS\iic.h: 'P2': undefined identifier
+*** ERROR C202 IN LINE 12 OF ..\SYS\iic.h: 'P2': undefined identifier
+   2          
+   3          
+   4          
+   5          void IIC_Delay(unsigned char i)
+   6          {
+   7   1          do{_nop_();}
+   8   1          while(i--);        
+   9   1      }
+  10          //总线启动条件
+  11          void IIC_Start(void)
+  12          {
+  13   1          SDA = 1;
+*** ERROR C202 IN LINE 13 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  14   1          SCL = 1;
+*** ERROR C202 IN LINE 14 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  15   1          IIC_Delay(DELAY_TIME);
+  16   1          SDA = 0;
+*** ERROR C202 IN LINE 16 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  17   1          IIC_Delay(DELAY_TIME);
+  18   1          SCL = 0;  
+*** ERROR C202 IN LINE 18 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  19   1      }
+  20          
+  21          //总线停止条件
+  22          void IIC_Stop(void)
+  23          {
+  24   1          SDA = 0;
+*** ERROR C202 IN LINE 24 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  25   1          SCL = 1;
+*** ERROR C202 IN LINE 25 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  26   1          IIC_Delay(DELAY_TIME);
+  27   1          SDA = 1;
+*** ERROR C202 IN LINE 27 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  28   1          IIC_Delay(DELAY_TIME);
+  29   1      }
+  30          
+  31          //发送应答
+  32          void IIC_SendAck(bit ackbit)
+  33          {
+  34   1          SCL = 0;
+*** ERROR C202 IN LINE 34 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  35   1          SDA = ackbit;           // 0：应答，1：非应答
+*** ERROR C202 IN LINE 35 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  36   1          IIC_Delay(DELAY_TIME);
+  37   1          SCL = 1;
+*** ERROR C202 IN LINE 37 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  38   1          IIC_Delay(DELAY_TIME);
+  39   1          SCL = 0; 
+*** ERROR C202 IN LINE 39 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  40   1          SDA = 1;
+C51 COMPILER V9.54   IIC                                                                   12/02/2021 23:30:46 PAGE 2   
+
+*** ERROR C202 IN LINE 40 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  41   1          IIC_Delay(DELAY_TIME);
+  42   1      }
+  43          
+  44          //等待应答
+  45          bit IIC_WaitAck(void)
+  46          {
+  47   1          bit ackbit;
+  48   1        
+  49   1          SCL  = 1;
+*** ERROR C202 IN LINE 49 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  50   1          IIC_Delay(DELAY_TIME);
+  51   1          ackbit = SDA;
+*** ERROR C202 IN LINE 51 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  52   1          SCL = 0;
+*** ERROR C202 IN LINE 52 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  53   1          IIC_Delay(DELAY_TIME);
+  54   1          return ackbit;
+  55   1      }
+  56          
+  57          //通过I2C总线发送数据
+  58          void IIC_SendByte(unsigned char byt)
+  59          {
+  60   1          unsigned char i;
+  61   1      
+  62   1          for(i=0; i<8; i++)
+  63   1          {
+  64   2              SCL  = 0;
+*** ERROR C202 IN LINE 64 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  65   2              IIC_Delay(DELAY_TIME);
+  66   2              if(byt & 0x80) SDA  = 1;
+*** ERROR C202 IN LINE 66 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  67   2              else SDA  = 0;
+*** ERROR C202 IN LINE 67 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  68   2              IIC_Delay(DELAY_TIME);
+  69   2              SCL = 1;
+*** ERROR C202 IN LINE 69 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  70   2              byt <<= 1;
+  71   2              IIC_Delay(DELAY_TIME);
+  72   2          }
+  73   1          SCL  = 0;  
+*** ERROR C202 IN LINE 73 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  74   1      }
+  75          
+  76          //从I2C总线上接收数据
+  77          unsigned char IIC_RecByte(void)
+  78          {
+  79   1          unsigned char i, da;
+  80   1          for(i=0; i<8; i++)
+  81   1          {   
+  82   2            SCL = 1;
+*** ERROR C202 IN LINE 82 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  83   2        IIC_Delay(DELAY_TIME);
+  84   2        da <<= 1;
+  85   2        if(SDA) da |= 1;
+*** ERROR C202 IN LINE 85 OF ..\SYS\iic.c: 'SDA': undefined identifier
+  86   2        SCL = 0;
+*** ERROR C202 IN LINE 86 OF ..\SYS\iic.c: 'SCL': undefined identifier
+  87   2        IIC_Delay(DELAY_TIME);
+  88   2          }
+  89   1          return da;    
+  90   1      }
+C51 COMPILER V9.54   IIC                                                                   12/02/2021 23:30:46 PAGE 3   
+
+  91          
+  92          
+  93          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  25 ERROR(S)

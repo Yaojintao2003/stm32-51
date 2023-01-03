@@ -1,0 +1,13 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj",
+".\Objects\csb.obj",
+".\Objects\ds18b20.obj",
+".\Objects\eeprom.obj",
+".\Objects\key.obj",
+".\Objects\pcf8591.obj",
+".\Objects\shuma.obj",
+".\Objects\usart1.obj",
+".\Objects\iic.obj",
+".\Objects\base.obj" 
+TO ".\Objects\main" 
+PRINT(".\Listings\main.m51") RAMSIZE(256) 

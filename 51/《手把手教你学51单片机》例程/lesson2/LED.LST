@@ -1,0 +1,57 @@
+C51 COMPILER V9.54   LED                                                                   01/01/2022 01:00:09 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LED
+OBJECT MODULE PLACED IN LED.OBJ
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE LED.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          /*
+   2          *******************************************************************************
+   3          *                     《手把手教你学51单片机(C语言版)》
+   4          *                    配套 KST-51 单片机开发板 示例源代码
+   5          *
+   6          *         (c) 版权所有 2014 金沙滩工作室/清华大学出版社 保留所有权利
+   7          *                 获取更多资料请访问：http://www.kingst.org
+   8          *
+   9          * 文件名：LED.c
+  10          * 描  述：第2章 点亮一个LED示例
+  11          * 版本号：v1.0.0
+  12          * 备  注：详情见第2章2.4节
+  13          *******************************************************************************
+  14          */
+  15          
+  16          #include <reg52.h>   //包含特殊功能寄存器定义的头文件
+  17          
+  18          sbit LED = P0^0;     //位地址声明，注意：sbit必须小写、P大写！
+  19          sbit ADDR0 = P1^0;
+  20          sbit ADDR1 = P1^1;
+  21          sbit ADDR2 = P1^2;
+  22          sbit ADDR3 = P1^3;
+  23          sbit ENLED = P1^4;
+  24          
+  25          void main()
+  26          {
+  27   1          ENLED = 0;
+  28   1          ADDR3 = 1;
+  29   1          ADDR2 = 1;
+  30   1          ADDR1 = 1;
+  31   1          ADDR0 = 0;
+  32   1          LED = 0;        //点亮小灯
+  33   1          while (1);      //程序停止在这里
+  34   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     14    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

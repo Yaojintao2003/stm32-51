@@ -1,0 +1,1 @@
+"..\CODE\shuma.c" OPTIMIZE (8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJECTEXTEND PRINT(.\Listings\shuma.lst) TABS (2) OBJECT(.\Objects\shuma.obj)

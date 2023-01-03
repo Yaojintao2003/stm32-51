@@ -1,0 +1,93 @@
+C51 COMPILER V9.54   MAIN                                                                  01/01/2022 23:36:39 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          /*
+   2          *******************************************************************************
+   3          *                     《手把手教你学51单片机(C语言版)》
+   4          *                    配套 KST-51 单片机开发板 示例源代码
+   5          *
+   6          *         (c) 版权所有 2014 金沙滩工作室/清华大学出版社 保留所有权利
+   7          *                 获取更多资料请访问：http://www.kingst.org
+   8          *
+   9          * 文件名：main.c
+  10          * 描  述：第5章 作业题5
+  11          * 版本号：v1.0.0
+  12          * 备  注：变更lesson5_3的正计数为倒计数
+  13          *******************************************************************************
+  14          */
+  15          
+  16          #include <reg52.h>
+  17          
+  18          sbit ADDR0 = P1^0;
+  19          sbit ADDR1 = P1^1;
+  20          sbit ADDR2 = P1^2;
+  21          sbit ADDR3 = P1^3;
+  22          sbit ENLED = P1^4;
+  23          
+  24          //用数组来存储数码管的真值表，数组将在下一章详细介绍
+  25          unsigned char code LedChar[] = {
+  26              0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xF8,
+  27              0x80, 0x90, 0x88, 0x83, 0xC6, 0xA1, 0x86, 0x8E
+  28          };
+  29          
+  30          void main()
+  31          {
+  32   1          unsigned char cnt = 0;  //记录T0中断次数
+  33   1          unsigned char sec = 0x0F;  //记录经过的秒数，倒计时初值0x0F(15)
+  34   1      
+  35   1          ENLED = 0;    //使能U3，选择数码管DS1
+  36   1          ADDR3 = 1;
+  37   1          ADDR2 = 0;
+  38   1          ADDR1 = 0;
+  39   1          ADDR0 = 0;
+  40   1          TMOD = 0x01;  //设置T0为模式1
+  41   1          TH0  = 0xB8;  //为T0赋初值0xB800
+  42   1          TL0  = 0x00;
+  43   1          TR0  = 1;     //启动T0
+  44   1          
+  45   1          while (1)
+  46   1          {
+  47   2              if (TF0 == 1)        //判断T0是否溢出
+  48   2              {
+  49   3                  TF0 = 0;         //T0溢出后，清零中断标志
+  50   3                  TH0 = 0xB8;      //并重新赋初值
+  51   3                  TL0 = 0x00;
+  52   3                  cnt++;           //计数值自加1
+  53   3                  if (cnt >= 50)   //判断T0溢出是否达到50次
+  54   3                  {
+  55   4                      cnt = 0;            //达到50次后计数值清零
+C51 COMPILER V9.54   MAIN                                                                  01/01/2022 23:36:39 PAGE 2   
+
+  56   4                      P0 = LedChar[sec];  //当前秒数对应的真值表中的值送到P0口
+  57   4                      if (sec > 0)        //当秒数大于0时，减1
+  58   4                      {
+  59   5                          sec--;
+  60   5                      }
+  61   4                      else                //当秒数等于0时，重新赋初值0x0F
+  62   4                      {
+  63   5                          sec = 0x0F;
+  64   5                      }
+  65   4                  }
+  66   3              }
+  67   2          }
+  68   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     64    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

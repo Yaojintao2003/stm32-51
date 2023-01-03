@@ -1,0 +1,1 @@
+"..\CODE\pcf8591.c" OPTIMIZE (8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJECTEXTEND PRINT(.\Listings\pcf8591.lst) TABS (2) OBJECT(.\Objects\pcf8591.obj)

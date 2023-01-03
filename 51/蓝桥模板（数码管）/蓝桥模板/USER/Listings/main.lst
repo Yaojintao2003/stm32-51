@@ -1,0 +1,65 @@
+C51 COMPILER V9.54   MAIN                                                                  12/02/2021 23:30:45 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJECTEXTEND
+                    - PRINT(.\Listings\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "num.h"
+*** WARNING C318 IN LINE 9 OF num.h: can't open file 'STC15F2K60S2.h'
+   2          #include "base.h"
+   3          #include "shuma.h" 
+   4          uchar shuma[10];//数码显示内容个数不能超过自己设置的最大容量
+   5          
+   6          
+   7          void main()
+   8          {
+   9   1       Timer1Init(); //定时器初始化
+  10   1        base_init();//基本外设初始化如：关闭蜂鸣器，关闭led
+  11   1      while(1)
+  12   1      {
+  13   2      shuma_trans(shuma,sprintf(shuma,"2018-117"));//双引号内为自己想显示的任何内容包括字母。
+  14   2      }
+  15   1      
+  16   1      }
+  17          
+  18          /*****定时器1初始化函数*******/
+  19          void Timer1Init(void)   //1毫秒@12.000MHz
+  20          {
+  21   1        AUXR |= 0x40;   //定时器时钟1T模式
+*** ERROR C202 IN LINE 21 OF main.c: 'AUXR': undefined identifier
+  22   1        TMOD &= 0x0F;   //设置定时器模式
+*** ERROR C202 IN LINE 22 OF main.c: 'TMOD': undefined identifier
+  23   1        TL1 = 0x20;   //设置定时初始值
+*** ERROR C202 IN LINE 23 OF main.c: 'TL1': undefined identifier
+  24   1        TH1 = 0xD1;   //设置定时初始值
+*** ERROR C202 IN LINE 24 OF main.c: 'TH1': undefined identifier
+  25   1        TF1 = 0;    //清除TF1标志
+*** ERROR C202 IN LINE 25 OF main.c: 'TF1': undefined identifier
+  26   1        TR1 = 1;    //定时器1开始计时
+*** ERROR C202 IN LINE 26 OF main.c: 'TR1': undefined identifier
+  27   1        EA=1;       //打开总中断
+*** ERROR C202 IN LINE 27 OF main.c: 'EA': undefined identifier
+  28   1        ET1=1;      //打开定时器中断
+*** ERROR C202 IN LINE 28 OF main.c: 'ET1': undefined identifier
+  29   1      }
+  30          
+  31          
+  32          
+  33          /*******定时器1中断服务函数***********/
+  34          void time1_handle() interrupt 3
+  35          {
+  36   1      static uint cent_ms;
+  37   1        cent_ms++;                     
+  38   1      shuma_dis();  //每隔1ms自动更新显示段码表的内容
+  39   1      }
+  40          
+  41          
+  42          
+  43          
+  44          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  8 ERROR(S)

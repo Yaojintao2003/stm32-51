@@ -1,0 +1,1 @@
+"..\CODE\key.c" OPTIMIZE (8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJECTEXTEND PRINT(.\Listings\key.lst) TABS (2) OBJECT(.\Objects\key.obj)

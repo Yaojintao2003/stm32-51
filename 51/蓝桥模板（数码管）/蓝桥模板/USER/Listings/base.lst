@@ -1,0 +1,75 @@
+C51 COMPILER V9.54   BASE                                                                  12/02/2021 23:30:46 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE BASE
+OBJECT MODULE PLACED IN .\Objects\base.obj
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE ..\SYS\base.c OPTIMIZE(8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJEC
+                    -TEXTEND PRINT(.\Listings\base.lst) TABS(2) OBJECT(.\Objects\base.obj)
+
+line level    source
+
+   1          #include "base.h"
+*** WARNING C318 IN LINE 9 OF num.h: can't open file 'STC15F2K60S2.h'
+   2          
+   3          
+   4          /*****基本外设初始化函数，其中包括了led和继电器，蜂鸣器的初始化配置******/
+   5          void base_init()
+   6          {
+   7   1      P0=0xff;
+*** ERROR C202 IN LINE 7 OF ..\SYS\base.c: 'P0': undefined identifier
+   8   1      P2=(P2&0x1f)|0x80;  
+*** ERROR C202 IN LINE 8 OF ..\SYS\base.c: 'P2': undefined identifier
+   9   1      P2=(P2&0x1f); 
+*** ERROR C202 IN LINE 9 OF ..\SYS\base.c: 'P2': undefined identifier
+  10   1      P0=0x00;
+*** ERROR C202 IN LINE 10 OF ..\SYS\base.c: 'P0': undefined identifier
+  11   1      P2=(P2&0x1f)|0xa0;  
+*** ERROR C202 IN LINE 11 OF ..\SYS\base.c: 'P2': undefined identifier
+  12   1      P2=(P2&0x1f); 
+*** ERROR C202 IN LINE 12 OF ..\SYS\base.c: 'P2': undefined identifier
+  13   1      }
+  14          
+  15          void jidian(bit flag)
+  16          {
+  17   1      if(flag)
+  18   1      {
+  19   2      P0|=0x01<<4;
+*** ERROR C202 IN LINE 19 OF ..\SYS\base.c: 'P0': undefined identifier
+  20   2      }else 
+  21   1      {
+  22   2      P0&=~(0x01<<4);
+*** ERROR C202 IN LINE 22 OF ..\SYS\base.c: 'P0': undefined identifier
+  23   2      }
+  24   1      P2=(P2&0x1f)|0xa0;  
+*** ERROR C202 IN LINE 24 OF ..\SYS\base.c: 'P2': undefined identifier
+  25   1      P2=(P2&0x1f); 
+*** ERROR C202 IN LINE 25 OF ..\SYS\base.c: 'P2': undefined identifier
+  26   1      }
+  27          
+  28          //例：led(x,1)点亮第x个led灯
+  29          //    led(x,0)熄灭第x个led灯
+  30          void led(uchar x,bit flag)
+  31          {
+  32   1      static uchar led_temp=0xff;
+  33   1        P0=led_temp;
+*** ERROR C202 IN LINE 33 OF ..\SYS\base.c: 'P0': undefined identifier
+  34   1      if(flag)  
+  35   1      {
+  36   2      P0&=~(0x01<<(x-1));
+*** ERROR C202 IN LINE 36 OF ..\SYS\base.c: 'P0': undefined identifier
+  37   2      }else
+  38   1      {
+  39   2      P0|=(0x01<<(x-1));
+*** ERROR C202 IN LINE 39 OF ..\SYS\base.c: 'P0': undefined identifier
+  40   2      }
+C51 COMPILER V9.54   BASE                                                                  12/02/2021 23:30:46 PAGE 2   
+
+  41   1      led_temp=P0;
+*** ERROR C202 IN LINE 41 OF ..\SYS\base.c: 'P0': undefined identifier
+  42   1      P2=(P2&0x1f)|0x80;  
+*** ERROR C202 IN LINE 42 OF ..\SYS\base.c: 'P2': undefined identifier
+  43   1      P2=(P2&0x1f);
+*** ERROR C202 IN LINE 43 OF ..\SYS\base.c: 'P2': undefined identifier
+  44   1      }
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  16 ERROR(S)

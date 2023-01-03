@@ -1,0 +1,84 @@
+C51 COMPILER V9.54   CSB                                                                   12/02/2021 23:30:45 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE CSB
+OBJECT MODULE PLACED IN .\Objects\csb.obj
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE ..\CODE\csb.c OPTIMIZE(8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJEC
+                    -TEXTEND PRINT(.\Listings\csb.lst) TABS(2) OBJECT(.\Objects\csb.obj)
+
+line level    source
+
+   1          #include "csb.h"
+*** WARNING C318 IN LINE 9 OF num.h: can't open file 'STC15F2K60S2.h'
+*** ERROR C202 IN LINE 5 OF ..\CODE\csb.h: 'P1': undefined identifier
+*** ERROR C202 IN LINE 6 OF ..\CODE\csb.h: 'P1': undefined identifier
+   2          
+   3          void csb_init()
+   4          {
+   5   1        AUXR &= 0x7F;   //定时器时钟12T模式
+*** ERROR C202 IN LINE 5 OF ..\CODE\csb.c: 'AUXR': undefined identifier
+   6   1        TMOD &= 0xF0;   //设置定时器模式
+*** ERROR C202 IN LINE 6 OF ..\CODE\csb.c: 'TMOD': undefined identifier
+   7   1        TL0 = 0xF4;   //设置定时初始值
+*** ERROR C202 IN LINE 7 OF ..\CODE\csb.c: 'TL0': undefined identifier
+   8   1        TH0 = 0xFF;   //设置定时初始值
+*** ERROR C202 IN LINE 8 OF ..\CODE\csb.c: 'TH0': undefined identifier
+   9   1        TF0 = 0;    //清除TF0标志
+*** ERROR C202 IN LINE 9 OF ..\CODE\csb.c: 'TF0': undefined identifier
+  10   1        TR0 = 0;    //定时器0开始计时
+*** ERROR C202 IN LINE 10 OF ..\CODE\csb.c: 'TR0': undefined identifier
+  11   1      }
+  12          
+  13          
+  14          
+  15          uchar csb_get()
+  16          {
+  17   1      uchar num=2,ds;
+  18   1      csb_tx=0;
+*** ERROR C202 IN LINE 18 OF ..\CODE\csb.c: 'csb_tx': undefined identifier
+  19   1      TL0 = 0xF4;   //设置定时初始值
+*** ERROR C202 IN LINE 19 OF ..\CODE\csb.c: 'TL0': undefined identifier
+  20   1      TH0 = 0xFF;   //设置定时初始值  
+*** ERROR C202 IN LINE 20 OF ..\CODE\csb.c: 'TH0': undefined identifier
+  21   1      TR0 = 1;    //定时器0开始计时
+*** ERROR C202 IN LINE 21 OF ..\CODE\csb.c: 'TR0': undefined identifier
+  22   1      while(num--)
+  23   1      {
+  24   2      while(!TF0);
+*** ERROR C202 IN LINE 24 OF ..\CODE\csb.c: 'TF0': undefined identifier
+  25   2      csb_tx^=1;
+*** ERROR C202 IN LINE 25 OF ..\CODE\csb.c: 'csb_tx': undefined identifier
+  26   2        TF0=0;
+*** ERROR C202 IN LINE 26 OF ..\CODE\csb.c: 'TF0': undefined identifier
+  27   2      } 
+  28   1      TR0 = 0;
+*** ERROR C202 IN LINE 28 OF ..\CODE\csb.c: 'TR0': undefined identifier
+  29   1      TL0 = 0x00;   //设置定时初始值
+*** ERROR C202 IN LINE 29 OF ..\CODE\csb.c: 'TL0': undefined identifier
+  30   1      TH0 = 0x00;   //设置定时初始值  
+*** ERROR C202 IN LINE 30 OF ..\CODE\csb.c: 'TH0': undefined identifier
+  31   1      TR0 = 1;
+*** ERROR C202 IN LINE 31 OF ..\CODE\csb.c: 'TR0': undefined identifier
+  32   1      while(csb_rx&&!TF0);
+*** ERROR C202 IN LINE 32 OF ..\CODE\csb.c: 'csb_rx': undefined identifier
+  33   1      TR0 = 0;
+C51 COMPILER V9.54   CSB                                                                   12/02/2021 23:30:45 PAGE 2   
+
+*** ERROR C202 IN LINE 33 OF ..\CODE\csb.c: 'TR0': undefined identifier
+  34   1      if(TF0)
+*** ERROR C202 IN LINE 34 OF ..\CODE\csb.c: 'TF0': undefined identifier
+  35   1      {
+  36   2      ds=99;
+  37   2      TF0=0;
+*** ERROR C202 IN LINE 37 OF ..\CODE\csb.c: 'TF0': undefined identifier
+  38   2      }else
+  39   1      {
+  40   2      ds=((TH0<<8)|TL0)*0.017;
+*** ERROR C202 IN LINE 40 OF ..\CODE\csb.c: 'TH0': undefined identifier
+  41   2      }
+  42   1          
+  43   1      return ds;
+  44   1      }
+  45          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  24 ERROR(S)

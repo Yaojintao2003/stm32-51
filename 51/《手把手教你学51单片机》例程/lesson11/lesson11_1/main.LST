@@ -1,0 +1,156 @@
+C51 COMPILER V9.54   MAIN                                                                  01/04/2022 14:28:34 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(2)
+
+line level    source
+
+   1          /*
+   2          *******************************************************************************
+   3          *                     《手把手教你学51单片机(C语言版)》
+   4          *                    配套 KST-51 单片机开发板 示例源代码
+   5          *
+   6          *         (c) 版权所有 2014 金沙滩工作室/清华大学出版社 保留所有权利
+   7          *                 获取更多资料请访问：http://www.kingst.org
+   8          *
+   9          * 文件名：main.c
+  10          * 描  述：第11章 普通IO口模拟实现串口通信的示例
+  11          * 版本号：v1.0.0
+  12          * 备  注：详情见第11章11.4节
+  13          *******************************************************************************
+  14          */
+  15          #include <REG52.H>
+  16          
+  17          
+  18          sbit PIN_RXD = P3^0;  //接收引脚定义
+  19          sbit PIN_TXD = P3^1;  //发送引脚定义
+  20          
+  21          bit RxdOrTxd = 0;  //指示当前状态为接收还是发送
+  22          bit RxdEnd = 0;    //接收结束标志
+  23          bit TxdEnd = 0;    //发送结束标志
+  24          unsigned char RxdBuf = 0;  //接收缓冲器
+  25          unsigned char TxdBuf = 0;  //发送缓冲器
+  26          
+  27          void ConfigUART(unsigned int baud);
+  28          void StartTXD(unsigned char dat);
+  29          void StartRXD();
+  30          
+  31          void main()
+  32          {
+  33   1          EA = 1;   //开总中断
+  34   1          ConfigUART(9600);  //配置波特率为9600
+  35   1          
+  36   1          while (1)
+  37   1          {
+  38   2              while (PIN_RXD);    //等待接收引脚出现低电平，即起始位
+  39   2              StartRXD();         //启动接收
+  40   2              while (!RxdEnd);    //等待接收完成
+  41   2              StartTXD(RxdBuf+1); //接收到的数据+1后，发送回去
+  42   2              while (!TxdEnd);    //等待发送完成
+  43   2          }
+  44   1      }
+  45          /* 串口配置函数，baud-通信波特率 */
+  46          void ConfigUART(unsigned int baud)
+  47          {
+  48   1          TMOD &= 0xF0;   //清零T0的控制位
+  49   1          TMOD |= 0x02;   //配置T0为模式2
+  50   1          TH0 = 256 - (11059200/12)/baud;  //计算T0重载值
+  51   1      }
+  52          /* 启动串行接收 */
+  53          void StartRXD()
+  54          {
+  55   1          TL0 = 256 - ((256-TH0)>>1);  //接收启动时的T0定时为半个波特率周期
+C51 COMPILER V9.54   MAIN                                                                  01/04/2022 14:28:34 PAGE 2   
+
+  56   1          ET0 = 1;        //使能T0中断
+  57   1          TR0 = 1;        //启动T0
+  58   1          RxdEnd = 0;     //清零接收结束标志
+  59   1          RxdOrTxd = 0;   //设置当前状态为接收
+  60   1      }
+  61          /* 启动串行发送，dat-待发送字节数据 */
+  62          void StartTXD(unsigned char dat)
+  63          {
+  64   1          TxdBuf = dat;   //待发送数据保存到发送缓冲器
+  65   1          TL0 = TH0;      //T0计数初值为重载值
+  66   1          ET0 = 1;        //使能T0中断
+  67   1          TR0 = 1;        //启动T0
+  68   1          PIN_TXD = 0;    //发送起始位
+  69   1          TxdEnd = 0;     //清零发送结束标志
+  70   1          RxdOrTxd = 1;   //设置当前状态为发送
+  71   1      }
+  72          /* T0中断服务函数，处理串行发送和接收 */
+  73          void InterruptTimer0() interrupt 1
+  74          {
+  75   1          static unsigned char cnt = 0; //位接收或发送计数
+  76   1      
+  77   1          if (RxdOrTxd)  //串行发送处理
+  78   1          {
+  79   2              cnt++;
+  80   2              if (cnt <= 8)  //低位在先依次发送8bit数据位
+  81   2              {
+  82   3                  PIN_TXD = TxdBuf & 0x01;
+  83   3                  TxdBuf >>= 1;
+  84   3              }
+  85   2              else if (cnt == 9)  //发送停止位
+  86   2              {
+  87   3                  PIN_TXD = 1;
+  88   3              }
+  89   2              else  //发送结束
+  90   2              {
+  91   3                  cnt = 0;    //复位bit计数器
+  92   3                  TR0 = 0;    //关闭T0
+  93   3                  TxdEnd = 1; //置发送结束标志
+  94   3              }
+  95   2          }
+  96   1          else  //串行接收处理
+  97   1          {
+  98   2              if (cnt == 0)     //处理起始位
+  99   2              {
+ 100   3                  if (!PIN_RXD) //起始位为0时，清零接收缓冲器，准备接收数据位
+ 101   3                  {
+ 102   4                      RxdBuf = 0;
+ 103   4                      cnt++;
+ 104   4                  }
+ 105   3                  else          //起始位不为0时，中止接收
+ 106   3                  {
+ 107   4                      TR0 = 0;  //关闭T0
+ 108   4                  }
+ 109   3              }
+ 110   2              else if (cnt <= 8)   //处理8位数据位
+ 111   2              {
+ 112   3                  RxdBuf >>= 1;    //低位在先，所以将之前接收的位向右移
+ 113   3                  if (PIN_RXD)     //接收脚为1时，缓冲器最高位置1，
+ 114   3                  {                //而为0时不处理即仍保持移位后的0
+ 115   4                      RxdBuf |= 0x80;
+ 116   4                  }
+ 117   3                  cnt++;
+C51 COMPILER V9.54   MAIN                                                                  01/04/2022 14:28:34 PAGE 3   
+
+ 118   3              }
+ 119   2              else  //停止位处理
+ 120   2              {
+ 121   3                  cnt = 0;         //复位bit计数器
+ 122   3                  TR0 = 0;         //关闭T0
+ 123   3                  if (PIN_RXD)     //停止位为1时，方能认为数据有效
+ 124   3                  {
+ 125   4                      RxdEnd = 1;  //置接收结束标志
+ 126   4                  }
+ 127   3              }
+ 128   2          }
+ 129   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    203    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      3    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

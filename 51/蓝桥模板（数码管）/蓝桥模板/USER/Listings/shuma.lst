@@ -1,0 +1,86 @@
+C51 COMPILER V9.54   SHUMA                                                                 12/02/2021 23:30:46 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE SHUMA
+OBJECT MODULE PLACED IN .\Objects\shuma.obj
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE ..\CODE\shuma.c OPTIMIZE(8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG OBJ
+                    -ECTEXTEND PRINT(.\Listings\shuma.lst) TABS(2) OBJECT(.\Objects\shuma.obj)
+
+line level    source
+
+   1          #include "shuma.h"
+*** WARNING C318 IN LINE 9 OF num.h: can't open file 'STC15F2K60S2.h'
+   2          xdata uchar duanma[8]={0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
+   3          
+   4          
+   5          
+   6          
+   7          void shuma_trans(uchar *p,int leng)
+   8          {
+   9   1      uchar i,j;
+  10   1      for(i=0,j=0;i<8,j<leng;i++,j++)
+  11   1      {
+  12   2       switch(p[j])
+  13   2       {
+  14   3         case '0':duanma[i]=0xc0;break;
+  15   3         case '1':duanma[i]=0xf9;break;
+  16   3         case '2':duanma[i]=0xa4;break;
+  17   3         case '3':duanma[i]=0xb0;break;
+  18   3         case '4':duanma[i]=0x99;break;
+  19   3         case '5':duanma[i]=0x92;break;
+  20   3         case '6':duanma[i]=0x82;break;
+  21   3         case '7':duanma[i]=0xf8;break;
+  22   3         case '8':duanma[i]=0x80;break;
+  23   3         case '9':duanma[i]=0x90;break;
+  24   3         case ' ':duanma[i]=0xff;break;
+  25   3         case '-':duanma[i]=0xbf;break;
+  26   3         case 'A':duanma[i]=0x88;break;
+  27   3         case 'B':duanma[i]=0x83;break;
+  28   3         case 'C':duanma[i]=0xc6;break;
+  29   3         case 'D':duanma[i]=0xa1;break;
+  30   3         case 'E':duanma[i]=0x86;break;
+  31   3         case 'F':duanma[i]=0x8e;break;
+  32   3         case 'H':duanma[i]=0x89;break;
+  33   3         case 'L':duanma[i]=0xc7;break;
+  34   3         case 'N':duanma[i]=0xc8;break;
+  35   3         case 'P':duanma[i]=0x8c;break;
+  36   3         case 'U':duanma[i]=0xc1;break;
+  37   3         default: duanma[i]=0xff;break;    
+  38   3       }
+  39   2       if(p[j+1]=='.')
+  40   2       {
+  41   3       duanma[i]&=0x7f;
+  42   3         j++;
+  43   3       }
+  44   2      } 
+  45   1      }
+  46          
+  47          
+  48          void shuma_dis()
+  49          {
+  50   1      static uchar wei;
+  51   1      P0=0xff;
+*** ERROR C202 IN LINE 51 OF ..\CODE\shuma.c: 'P0': undefined identifier
+  52   1      P2=(P2&0x1f)|0xe0;  
+C51 COMPILER V9.54   SHUMA                                                                 12/02/2021 23:30:46 PAGE 2   
+
+*** ERROR C202 IN LINE 52 OF ..\CODE\shuma.c: 'P2': undefined identifier
+  53   1      P2=(P2&0x1f);
+*** ERROR C202 IN LINE 53 OF ..\CODE\shuma.c: 'P2': undefined identifier
+  54   1      P0=duanma[wei];
+*** ERROR C202 IN LINE 54 OF ..\CODE\shuma.c: 'P0': undefined identifier
+  55   1      P2=(P2&0x1f)|0xe0;  
+*** ERROR C202 IN LINE 55 OF ..\CODE\shuma.c: 'P2': undefined identifier
+  56   1      P2=(P2&0x1f);
+*** ERROR C202 IN LINE 56 OF ..\CODE\shuma.c: 'P2': undefined identifier
+  57   1      P0=0x01<<wei;
+*** ERROR C202 IN LINE 57 OF ..\CODE\shuma.c: 'P0': undefined identifier
+  58   1      P2=(P2&0x1f)|0xc0;  
+*** ERROR C202 IN LINE 58 OF ..\CODE\shuma.c: 'P2': undefined identifier
+  59   1      P2=(P2&0x1f); 
+*** ERROR C202 IN LINE 59 OF ..\CODE\shuma.c: 'P2': undefined identifier
+  60   1      wei++;if(wei>7){wei=0;}
+  61   1      }
+  62          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  9 ERROR(S)

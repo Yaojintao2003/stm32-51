@@ -1,0 +1,109 @@
+C51 COMPILER V9.54   DS18B20                                                               12/02/2021 23:30:45 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE DS18B20
+OBJECT MODULE PLACED IN .\Objects\ds18b20.obj
+COMPILER INVOKED BY: E:\kiel5\C51\BIN\C51.EXE ..\CODE\ds18b20.c OPTIMIZE(8,SPEED) INCDIR(..\CODE;..\SYS;..\USER) DEBUG O
+                    -BJECTEXTEND PRINT(.\Listings\ds18b20.lst) TABS(2) OBJECT(.\Objects\ds18b20.obj)
+
+line level    source
+
+   1          #include "ds18b20.h"
+*** WARNING C318 IN LINE 9 OF num.h: can't open file 'STC15F2K60S2.h'
+*** ERROR C202 IN LINE 7 OF ..\CODE\ds18b20.h: 'P1': undefined identifier
+   2          
+   3          //单总线延时函数
+   4          void Delay_OneWire(unsigned int t)  //STC89C52RC
+   5          {
+   6   1        while(t--);
+   7   1      }
+   8          
+   9          //通过单总线向DS18B20写一个字节
+  10          void Write_DS18B20(unsigned char dat)
+  11          {
+  12   1        unsigned char i;
+  13   1        for(i=0;i<8;i++)
+  14   1        {
+  15   2          DQ = 0;
+*** ERROR C202 IN LINE 15 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  16   2          DQ = dat&0x01;
+*** ERROR C202 IN LINE 16 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  17   2          Delay_OneWire(60);
+  18   2          DQ = 1;
+*** ERROR C202 IN LINE 18 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  19   2          dat >>= 1;
+  20   2        }
+  21   1        Delay_OneWire(60);
+  22   1      }
+  23          
+  24          //从DS18B20读取一个字节
+  25          unsigned char Read_DS18B20(void)
+  26          {
+  27   1        unsigned char i;
+  28   1        unsigned char dat;
+  29   1        
+  30   1        for(i=0;i<8;i++)
+  31   1        {
+  32   2          DQ = 0;
+*** ERROR C202 IN LINE 32 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  33   2          dat >>= 1;
+  34   2          DQ = 1;
+*** ERROR C202 IN LINE 34 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  35   2          if(DQ)
+*** ERROR C202 IN LINE 35 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  36   2          {
+  37   3            dat |= 0x80;
+  38   3          }     
+  39   2          Delay_OneWire(60);
+  40   2        }
+  41   1        return dat;
+  42   1      }
+  43          
+  44          //DS18B20设备初始化
+  45          bit init_ds18b20(void)
+  46          {
+C51 COMPILER V9.54   DS18B20                                                               12/02/2021 23:30:45 PAGE 2   
+
+  47   1          bit initflag = 0;
+  48   1          
+  49   1          DQ = 1;
+*** ERROR C202 IN LINE 49 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  50   1          Delay_OneWire(144);
+  51   1          DQ = 0;
+*** ERROR C202 IN LINE 51 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  52   1          Delay_OneWire(960);
+  53   1          DQ = 1;
+*** ERROR C202 IN LINE 53 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  54   1          Delay_OneWire(120); 
+  55   1          initflag = DQ;     
+*** ERROR C202 IN LINE 55 OF ..\CODE\ds18b20.c: 'DQ': undefined identifier
+  56   1          Delay_OneWire(60);
+  57   1          return initflag;
+  58   1      }
+  59          
+  60          float wendu_get()
+  61          {
+  62   1      uchar high,low;
+  63   1      float wd; 
+  64   1      init_ds18b20();
+  65   1      Write_DS18B20(0xcc);
+  66   1      Write_DS18B20(0x44);  
+  67   1        Delay_OneWire(60);
+  68   1      EA=0;
+*** ERROR C202 IN LINE 68 OF ..\CODE\ds18b20.c: 'EA': undefined identifier
+  69   1      init_ds18b20(); 
+  70   1      Write_DS18B20(0xcc);
+  71   1      Write_DS18B20(0xbe);  
+  72   1      low=Read_DS18B20();
+  73   1      high=Read_DS18B20();
+  74   1      wd=(high<<4)+(low>>4)+(low&0x0f)*0.0625;  
+  75   1      EA=1; 
+*** ERROR C202 IN LINE 75 OF ..\CODE\ds18b20.c: 'EA': undefined identifier
+  76   1      return wd;
+  77   1      }
+  78          
+  79          
+  80          
+  81          
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  13 ERROR(S)
